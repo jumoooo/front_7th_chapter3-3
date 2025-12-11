@@ -11,13 +11,14 @@ import type {
   CreateCommentDto,
   UpdateCommentDto,
 } from "../model/types"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 댓글 목록 조회 (게시물별)
  */
 export async function fetchComments(postId: number): Promise<CommentsResponse> {
   try {
-    const response = await fetch(`/api/comments/post/${postId}`)
+    const response = await fetch(getApiUrl(`/comments/post/${postId}`))
     
     if (!response.ok) {
       throw new Error(`댓글 조회 실패: ${response.statusText}`)
@@ -35,7 +36,7 @@ export async function fetchComments(postId: number): Promise<CommentsResponse> {
  */
 export async function addComment(comment: CreateCommentDto): Promise<CommentResponse> {
   try {
-    const response = await fetch("/api/comments/add", {
+    const response = await fetch(getApiUrl("/comments/add"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(comment),
@@ -57,7 +58,7 @@ export async function addComment(comment: CreateCommentDto): Promise<CommentResp
  */
 export async function updateComment(id: number, comment: UpdateCommentDto): Promise<CommentResponse> {
   try {
-    const response = await fetch(`/api/comments/${id}`, {
+    const response = await fetch(getApiUrl(`/comments/${id}`), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(comment),
@@ -79,7 +80,7 @@ export async function updateComment(id: number, comment: UpdateCommentDto): Prom
  */
 export async function deleteComment(id: number): Promise<void> {
   try {
-    const response = await fetch(`/api/comments/${id}`, {
+    const response = await fetch(getApiUrl(`/comments/${id}`), {
       method: "DELETE",
     })
     

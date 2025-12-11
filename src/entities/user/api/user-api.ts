@@ -10,6 +10,7 @@ import type {
   UsersResponse,
   FetchUsersParams,
 } from "../model/types"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 사용자 목록 조회
@@ -20,7 +21,7 @@ export async function fetchUsers(params?: FetchUsersParams): Promise<UsersRespon
     const skip = params?.skip ?? 0
     const select = params?.select
     
-    let url = `/api/users?limit=${limit}&skip=${skip}`
+    let url = getApiUrl(`/users?limit=${limit}&skip=${skip}`)
     if (select) {
       url += `&select=${select}`
     }
@@ -43,7 +44,7 @@ export async function fetchUsers(params?: FetchUsersParams): Promise<UsersRespon
  */
 export async function fetchUserById(id: number): Promise<UserResponse> {
   try {
-    const response = await fetch(`/api/users/${id}`)
+    const response = await fetch(getApiUrl(`/users/${id}`))
     
     if (!response.ok) {
       throw new Error(`사용자 조회 실패: ${response.statusText}`)

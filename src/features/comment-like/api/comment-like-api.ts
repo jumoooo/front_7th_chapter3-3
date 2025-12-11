@@ -6,13 +6,14 @@
  */
 
 import type { CommentResponse } from "../../../entities/comment/model"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 댓글 좋아요
  */
 export async function likeComment(id: number, currentLikes: number): Promise<CommentResponse> {
   try {
-    const response = await fetch(`/api/comments/${id}`, {
+    const response = await fetch(getApiUrl(`/comments/${id}`), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ likes: currentLikes + 1 }),

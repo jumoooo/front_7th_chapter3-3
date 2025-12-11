@@ -6,13 +6,14 @@
  */
 
 import type { PostsResponse, TagsResponse } from "../../../entities/post/model/types"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 태그별 게시물 조회
  */
 export async function fetchPostsByTag(tag: string): Promise<PostsResponse> {
   try {
-    const response = await fetch(`/api/posts/tag/${encodeURIComponent(tag)}`)
+    const response = await fetch(getApiUrl(`/posts/tag/${encodeURIComponent(tag)}`))
 
     if (!response.ok) {
       throw new Error(`태그별 게시물 조회 실패: ${response.statusText}`)
@@ -30,7 +31,7 @@ export async function fetchPostsByTag(tag: string): Promise<PostsResponse> {
  */
 export async function fetchTags(): Promise<TagsResponse> {
   try {
-    const response = await fetch("/api/posts/tags")
+    const response = await fetch(getApiUrl("/posts/tags"))
 
     if (!response.ok) {
       throw new Error(`태그 목록 조회 실패: ${response.statusText}`)

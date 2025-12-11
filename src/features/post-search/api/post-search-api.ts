@@ -6,13 +6,14 @@
  */
 
 import type { PostsResponse } from "../../../entities/post/model/types"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 게시물 검색
  */
 export async function searchPosts(query: string): Promise<PostsResponse> {
   try {
-    const response = await fetch(`/api/posts/search?q=${encodeURIComponent(query)}`)
+    const response = await fetch(getApiUrl(`/posts/search?q=${encodeURIComponent(query)}`))
 
     if (!response.ok) {
       throw new Error(`게시물 검색 실패: ${response.statusText}`)

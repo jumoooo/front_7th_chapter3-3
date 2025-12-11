@@ -6,6 +6,7 @@
  */
 
 import type { PostResponse, PostsResponse, CreatePostDto, UpdatePostDto, FetchPostsParams } from "../model/types"
+import { getApiUrl } from "../../../shared/lib/api-config"
 
 /**
  * 게시물 목록 조회
@@ -17,7 +18,7 @@ export async function fetchPosts(params?: FetchPostsParams): Promise<PostsRespon
     const sortBy = params?.sortBy
     const sortOrder = params?.sortOrder
 
-    let url = `/api/posts?limit=${limit}&skip=${skip}`
+    let url = getApiUrl(`/posts?limit=${limit}&skip=${skip}`)
 
     // 정렬 파라미터 추가
     if (sortBy) {
@@ -93,7 +94,7 @@ function sortPosts(posts: PostResponse[], sortBy: string, sortOrder: "asc" | "de
  */
 export async function fetchPostById(id: number): Promise<PostResponse> {
   try {
-    const response = await fetch(`/api/posts/${id}`)
+    const response = await fetch(getApiUrl(`/posts/${id}`))
 
     if (!response.ok) {
       throw new Error(`게시물 조회 실패: ${response.statusText}`)
@@ -111,7 +112,7 @@ export async function fetchPostById(id: number): Promise<PostResponse> {
  */
 export async function addPost(post: CreatePostDto): Promise<PostResponse> {
   try {
-    const response = await fetch("/api/posts/add", {
+    const response = await fetch(getApiUrl("/posts/add"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(post),
@@ -133,7 +134,7 @@ export async function addPost(post: CreatePostDto): Promise<PostResponse> {
  */
 export async function updatePost(id: number, post: UpdatePostDto): Promise<PostResponse> {
   try {
-    const response = await fetch(`/api/posts/${id}`, {
+    const response = await fetch(getApiUrl(`/posts/${id}`), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(post),
@@ -155,7 +156,7 @@ export async function updatePost(id: number, post: UpdatePostDto): Promise<PostR
  */
 export async function deletePost(id: number): Promise<void> {
   try {
-    const response = await fetch(`/api/posts/${id}`, {
+    const response = await fetch(getApiUrl(`/posts/${id}`), {
       method: "DELETE",
     })
 
