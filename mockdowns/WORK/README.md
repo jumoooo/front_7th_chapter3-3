@@ -73,8 +73,14 @@ WORK/
 작업 중 참고가 필요한 문서들은 다음 위치에 있습니다:
 
 - **규칙 및 가이드**: `mockdowns/RULES/`
+- **Import 경로 규칙** (Import 관련 작업 시 필수): `mockdowns/RULES/import-path-rules.md`
 - **전체 워크플로우**: `mockdowns/PLANS/workflow.md`
 - **상세 계획**: `mockdowns/PLANS/`
+
+### ⚠️ Import 관련 작업 시 필수
+
+Import 경로 관련 작업을 할 때는 반드시 `mockdowns/RULES/import-path-rules.md`를 먼저 읽으세요.
+이 문서를 무시하면 Vite 모듈 해석 실패 에러가 발생할 수 있습니다.
 
 ---
 
