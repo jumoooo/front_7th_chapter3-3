@@ -4,6 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/front_7th_chapter3-3/",
   plugins: [react(), tsconfigPaths()],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],

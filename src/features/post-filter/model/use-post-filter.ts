@@ -88,7 +88,7 @@ export function usePostFilter() {
       ])
 
       // 게시물과 사용자 정보 결합
-      let postsWithUsers = postsResponse.posts.map((post: Post) => ({
+      let postsWithUsers: Post[] = postsResponse.posts.map((post: Post) => ({
         ...post,
         author: usersResponse.users.find((user: User) => user.id === post.userId),
       }))

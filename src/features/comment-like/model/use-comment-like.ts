@@ -1,10 +1,10 @@
 /**
  * Comment Like Feature Hook
- * 
+ *
  * 댓글 좋아요 기능을 위한 커스텀 훅
  */
 
-import { useCommentStore } from "src/entities/comment/model"
+import { useCommentStore } from "../../../entities/comment/model"
 import { likeComment as likeCommentAPI } from "../api/comment-like-api"
 
 /**
@@ -18,8 +18,8 @@ export function useCommentLike() {
       const comment = comments[postId]?.find((c) => c.id === id)
       if (!comment) return
 
-      const updatedComment = await likeCommentAPI(id, comment.likes)
-      
+      await likeCommentAPI(id, comment.likes)
+
       // Store 업데이트는 API 호출 후 자동으로 처리됨
       // 필요 시 Store에 액션 추가 가능
     } catch (error) {
@@ -32,4 +32,3 @@ export function useCommentLike() {
     handleLike,
   }
 }
-

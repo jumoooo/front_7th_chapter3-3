@@ -4,8 +4,6 @@
  * 텍스트 하이라이트 등 텍스트 처리 유틸리티
  */
 
-import React from "react"
-
 /**
  * 텍스트에서 특정 문자열을 하이라이트 처리
  * @param text 원본 텍스트

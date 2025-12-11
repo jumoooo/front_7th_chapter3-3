@@ -14,7 +14,9 @@ import { useCommentDelete } from "../../../features/comment-delete/model"
 import { likeComment as likeCommentAPI } from "../../../features/comment-like/api"
 import { usePostStore } from "../../../entities/post/model"
 import { highlightText } from "../../../shared/lib/text-utils"
-import { useEffect } from "react"
+import { fetchUsers } from "../../../entities/user/api"
+import { useEffect, useState } from "react"
+import type { User } from "../../../entities/user/model"
 
 interface CommentListProps {
   postId: number
@@ -29,6 +31,7 @@ export function CommentList({ postId }: CommentListProps) {
   const { openEditCommentDialog } = useCommentEdit()
   const { handleDeleteComment } = useCommentDelete()
   const { searchQuery } = usePostStore()
+  const [users, setUsers] = useState<Record<number, User>>({})
 
   const postComments = comments[postId] || []
 
@@ -37,6 +40,26 @@ export function CommentList({ postId }: CommentListProps) {
       fetchComments(postId)
     }
   }, [postId, fetchComments, postComments.length])
+
+  useEffect(() => {
+    // 댓글의 사용자 정보 가져오기
+    const userIds = new Set(postComments.map((c) => c.userId))
+    if (userIds.size > 0) {
+      fetchUsers({ limit: 0, select: "id,username,image" })
+        .then((response) => {
+          const usersMap: Record<number, User> = {}
+          response.users.forEach((user) => {
+            if (userIds.has(user.id)) {
+              usersMap[user.id] = user
+            }
+          })
+          setUsers(usersMap)
+        })
+        .catch((error) => {
+          console.error("사용자 정보 조회 오류:", error)
+        })
+    }
+  }, [postComments])
 
   return (
     <div className="mt-2">
@@ -51,7 +74,7 @@ export function CommentList({ postId }: CommentListProps) {
         {postComments.map((comment) => (
           <div key={comment.id} className="flex items-center justify-between text-sm border-b pb-1">
             <div className="flex items-center space-x-2 overflow-hidden">
-              <span className="font-medium truncate">{comment.user?.username || "Unknown"}:</span>
+              <span className="font-medium truncate">{users[comment.userId]?.username || "Unknown"}:</span>
               <span className="truncate">{highlightText(comment.body, searchQuery)}</span>
             </div>
             <div className="flex items-center space-x-1">
