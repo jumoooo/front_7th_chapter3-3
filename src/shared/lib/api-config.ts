@@ -11,13 +11,13 @@
  * 프로덕션 환경: https://dummyjson.com (직접 API 호출)
  */
 export function getApiBaseUrl(): string {
-  // 개발 환경에서는 Vite 프록시 사용
-  if (import.meta.env.DEV) {
-    return "/api"
+  // 프로덕션 환경에서는 직접 API 서버 사용
+  if (import.meta.env.PROD) {
+    return "https://dummyjson.com"
   }
 
-  // 프로덕션 환경에서는 직접 API 서버 사용
-  return "https://dummyjson.com"
+  // 개발 환경에서는 Vite 프록시 사용
+  return "/api"
 }
 
 /**
